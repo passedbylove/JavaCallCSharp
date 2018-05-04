@@ -11,15 +11,15 @@ endif
 
 CXXFLAGS = -Wall  -std=c++14 -m64 -fPIC
 LDLIBS = -ldl -lstdc++fs
-JAVALIB= -I/usr/lib/jvm/java-9-openjdk-amd64/include -I/usr/lib/jvm/java-9-openjdk-amd64/include/linux/
+JAVALIB= -I/opt/jdk1.8.0_171/include -I/opt/jdk1.8.0_171/linux/
 .PHONY: all clean
 
 all: tar.so   Makefile
 
 tar.so: CoreCLRHost.cpp CoreCLRHost.hpp utils.hpp Sample1.h  Makefile
-	git -C dynamicLinker pull || git clone https://github.com/Marqin/dynamicLinker
+	git -C dynamicLinker pull || git clone https://github.com/passedbylove/dynamicLinker
 	make -C dynamicLinker CXX=$(CXX)
-	$(CXX) $(JAVALIB) $(CXXFLAGS) CoreCLRHost.cpp -shared -o tar.so -LdynamicLinker/ -ldynamicLinker $(LDLIBS)
+	$(CXX) $(JAVALIB) $(CXXFLAGS) CoreCLRHost.cpp -shared -o libSample1.so -LdynamicLinker/ -ldynamicLinker $(LDLIBS)
 
 
 clean:
